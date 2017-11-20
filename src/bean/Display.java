@@ -48,10 +48,10 @@ public class Display extends Canvas implements Serializable, IFilterListener {
 
     @Override
     public void paint(Graphics g) {
-        if (img != null) {
-            this.setSize(image.getWidth(), image.getHeight());
-            Dimension dimension = this.getSize();
+        if (image != null) {
             img = image.getAsBufferedImage();
+            this.setSize(img.getWidth(), img.getHeight());
+            Dimension dimension = this.getSize();
             g.drawImage(img, 0, 0, dimension.width, dimension.height, null);
         }
     }
