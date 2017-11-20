@@ -7,7 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
+<<<<<<< HEAD
 import java.io.Serializable;
+=======
+import java.nio.Buffer;
+>>>>>>> d2f7dd33c42779932d2c0b84415ff3874e540e66
 import java.util.Vector;
 
 public class Display extends Canvas implements Serializable, IFilterListener {
@@ -41,25 +45,14 @@ public class Display extends Canvas implements Serializable, IFilterListener {
         repaint();
     }
 
+    @Override
     public void paint(Graphics g) {
-        // Create a frame for display.
-        JFrame frame = new JFrame();
-        frame.setTitle("DisplayJAI: loetstellen.jpg");
-
-        // Get the JFrame ContentPane.
-        Container contentPane = frame.getContentPane();
-        contentPane.setLayout(new BorderLayout());
-
-        // Create an instance of DisplayJAI.
-        DisplayJAI dj = new DisplayJAI(this.image);
-
-        // Add to the JFrame ContentPane an instance of JScrollPane
-        // containing the DisplayJAI instance.
-        contentPane.add(new JScrollPane(dj),BorderLayout.CENTER);
-
-        // Set the closing operation so the application is finished.
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,500); // adjust the frame size.
-        frame.setVisible(true); // show the frame.
+        super.paint(g);
+        BufferedImage img = image.getAsBufferedImage();
+        if (img != null) {
+            int x = (getWidth() - img.getWidth()) / 2;
+            int y = (getHeight() - img.getHeight()) / 2;
+            g.drawImage(img, x, y, this);
+        }
     }
 }
