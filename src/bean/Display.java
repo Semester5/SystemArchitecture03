@@ -4,6 +4,7 @@ import javax.media.jai.PlanarImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
+import java.nio.Buffer;
 import java.util.Vector;
 
 public class Display extends Canvas implements IFilterListener {
@@ -37,7 +38,8 @@ public class Display extends Canvas implements IFilterListener {
     }
 
     public void paint(Graphics g) {
-
+        BufferedImage img = image.getAsBufferedImage();
+        g.drawImage(img,0,0, null);
     }
 
 }
