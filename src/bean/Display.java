@@ -37,9 +37,15 @@ public class Display extends Canvas implements IFilterListener {
         repaint();
     }
 
+    @Override
     public void paint(Graphics g) {
+        super.paint(g);
         BufferedImage img = image.getAsBufferedImage();
-        g.drawImage(img,0,0, null);
+        if (img != null) {
+            int x = (getWidth() - img.getWidth()) / 2;
+            int y = (getHeight() - img.getHeight()) / 2;
+            g.drawImage(img, x, y, this);
+        }
     }
 
 }
