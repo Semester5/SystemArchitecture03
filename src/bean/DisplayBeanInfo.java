@@ -18,12 +18,11 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
         return null;
     }
 
-
     @Override
     public EventSetDescriptor[] getEventSetDescriptors() {
         try {
             EventSetDescriptor esd1;
-            Class c = SourceReader.class;
+            Class c = Display.class;
             String es = "filter";
             Class lc = IFilterListener.class;
             String names[] = { "filterValueChanged" };
@@ -57,5 +56,4 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
         }
         return null;
     }
-
 }
