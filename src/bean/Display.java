@@ -7,11 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
-<<<<<<< HEAD
 import java.io.Serializable;
-=======
-import java.nio.Buffer;
->>>>>>> d2f7dd33c42779932d2c0b84415ff3874e540e66
 import java.util.Vector;
 
 public class Display extends Canvas implements Serializable, IFilterListener {
