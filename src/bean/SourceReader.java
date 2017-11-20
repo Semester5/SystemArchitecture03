@@ -15,7 +15,7 @@ public class SourceReader implements  Runnable, Serializable{
     private PlanarImage image;
 
     public SourceReader() {
-        this.imagePath = new String(""); //"Inputfiles\\loetstellen.jpg"
+        this.imagePath = new String("Inputfiles\\\\loetstellen.jpg");
         this.listeners = new Vector();
     }
 
