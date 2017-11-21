@@ -1,12 +1,6 @@
 package bean;
-
-import com.sun.media.jai.widget.DisplayJAI;
-
 import javax.media.jai.PlanarImage;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
 import java.io.Serializable;
 import java.util.Vector;
 

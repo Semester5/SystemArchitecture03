@@ -3,11 +3,16 @@ package bean;
 import java.beans.*;
 import java.lang.reflect.Method;
 
-public class DisplayBeanInfo extends SimpleBeanInfo {
+public class TreshholdBeanInfo extends SimpleBeanInfo{
 
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor pd[] = { };
+            PropertyDescriptor low, high, constant;
+            Class cls = Treshhold.class;
+            low = new PropertyDescriptor("low", cls);
+            high = new PropertyDescriptor("high", cls);
+            constant = new PropertyDescriptor("constant", cls);
+            PropertyDescriptor pd[] = { low, high, constant};
             return pd;
         }
         catch(Exception ex) {
@@ -16,12 +21,11 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
         return null;
     }
 
-    @Override
     public EventSetDescriptor[] getEventSetDescriptors() {
         try {
             EventSetDescriptor esd1;
-            Class c = Display.class;
-            String es = "filter";
+            Class c = Treshhold.class;
+            String es = "treshhold";
             Class lc = IFilterListener.class;
             String names[] = { "filterValueChanged" };
             String al = "addIFilterListener";
@@ -38,7 +42,7 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
 
     public MethodDescriptor[] getMethodDescriptors() {
         try {
-            Class c = Display.class;
+            Class c = Treshhold.class;
             Class parameterTypes[] = { FilterEvent.class };
             String name = "filterValueChanged";
             Method method1 = c.getMethod(name, parameterTypes);

@@ -3,11 +3,15 @@ package bean;
 import java.beans.*;
 import java.lang.reflect.Method;
 
-public class DisplayBeanInfo extends SimpleBeanInfo {
-
+public class OpeningBeanInfo extends SimpleBeanInfo {
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor pd[] = { };
+            PropertyDescriptor matrixSize, erodeLoops, dilateLoops;
+            Class cls = Opening.class;
+            matrixSize = new PropertyDescriptor("matrixSize", cls);
+            erodeLoops = new PropertyDescriptor("erodeLoops", cls);
+            dilateLoops = new PropertyDescriptor("dilateLoops", cls);
+            PropertyDescriptor pd[] = { matrixSize, erodeLoops, dilateLoops};
             return pd;
         }
         catch(Exception ex) {
@@ -16,12 +20,11 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
         return null;
     }
 
-    @Override
     public EventSetDescriptor[] getEventSetDescriptors() {
         try {
             EventSetDescriptor esd1;
-            Class c = Display.class;
-            String es = "filter";
+            Class c = Opening.class;
+            String es = "opening";
             Class lc = IFilterListener.class;
             String names[] = { "filterValueChanged" };
             String al = "addIFilterListener";
@@ -38,7 +41,7 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
 
     public MethodDescriptor[] getMethodDescriptors() {
         try {
-            Class c = Display.class;
+            Class c = Opening.class;
             Class parameterTypes[] = { FilterEvent.class };
             String name = "filterValueChanged";
             Method method1 = c.getMethod(name, parameterTypes);

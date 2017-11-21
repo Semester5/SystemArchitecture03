@@ -5,3 +5,16 @@ Java-Bean: True
 
 Name: bean/Display.class
 Java-Bean: True
+
+Name: bean/ROI.class
+Java-Bean: True
+
+Name: bean/Treshhold.class
+Java-Bean: True
+
+Name: bean/Median.class
+Java-Bean: True
+
+Name: bean/Opening.class
+Java-Bean: True
+
