@@ -13,10 +13,18 @@ public class SourceReader implements  Runnable, Serializable{
     private Vector listeners;
     private String imagePath;
     private PlanarImage image;
+    private transient Thread t;
 
     public SourceReader() {
-        this.imagePath = new String("Inputfiles\\\\loetstellen.jpg");
+        this.imagePath = "";
         this.listeners = new Vector();
+        image = null;
+        startThread();
+    }
+
+    private void startThread() {
+        t = new Thread(this);
+        t.start();
     }
 
     public String getImagePath() {

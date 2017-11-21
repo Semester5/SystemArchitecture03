@@ -14,20 +14,11 @@ public class Display extends Canvas implements Serializable, IFilterListener {
 
     private Vector listeners;
     private PlanarImage image;
-    private BufferedImage img;
 
     public Display() {
         this.setSize(100, 100);
         this.listeners = new Vector();
-        img = null;
-    }
-
-    public PlanarImage getImage() {
-        return image;
-    }
-
-    public void setImage(PlanarImage image) {
-        this.image = image;
+        image = null;
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
@@ -49,8 +40,8 @@ public class Display extends Canvas implements Serializable, IFilterListener {
     @Override
     public void paint(Graphics g) {
         if (image != null) {
-            img = image.getAsBufferedImage();
-            this.setSize(img.getWidth(), img.getHeight());
+            Image img = image.getAsBufferedImage();
+            this.setSize(image.getWidth(), image.getHeight());
             Dimension dimension = this.getSize();
             g.drawImage(img, 0, 0, dimension.width, dimension.height, null);
         }

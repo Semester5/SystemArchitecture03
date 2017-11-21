@@ -7,9 +7,9 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
 
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor min, max;
-            min = new PropertyDescriptor("image", Display.class);
-            PropertyDescriptor pd[] = { min };
+//            PropertyDescriptor min, max;
+//            min = new PropertyDescriptor("image", Display.class);
+            PropertyDescriptor pd[] = { };
             return pd;
         }
         catch(Exception ex) {
@@ -41,12 +41,10 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
     public MethodDescriptor[] getMethodDescriptors() {
         try {
             Class c = Display.class;
-            Class parameterTypes[] = new Class[1];
-            parameterTypes[0] = FilterEvent.class;
+            Class parameterTypes[] = { FilterEvent.class };
             String name = "filterValueChanged";
             Method method1 = c.getMethod(name, parameterTypes);
-            ParameterDescriptor pds[] = new ParameterDescriptor[1];
-            pds[0] = new ParameterDescriptor();
+            ParameterDescriptor pds[] = { new ParameterDescriptor() };
             MethodDescriptor md1 = new MethodDescriptor(method1, pds);
             MethodDescriptor mds[] = { md1 };
             return mds;
