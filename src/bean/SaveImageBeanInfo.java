@@ -1,13 +1,20 @@
 package bean;
 
-import java.beans.*;
+import java.beans.MethodDescriptor;
+import java.beans.ParameterDescriptor;
+import java.beans.PropertyDescriptor;
+import java.beans.SimpleBeanInfo;
 import java.lang.reflect.Method;
 
-public class DisplayBeanInfo extends SimpleBeanInfo {
+public class SaveImageBeanInfo extends SimpleBeanInfo {
 
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor pd[] = { };
+            PropertyDescriptor pathName, formatName;
+            Class cls = SaveImage.class;
+            pathName = new PropertyDescriptor("pathName", cls);
+            formatName = new PropertyDescriptor("formatName", cls);
+            PropertyDescriptor pd[] = { pathName, formatName };
             return pd;
         }
         catch(Exception ex) {
@@ -18,7 +25,7 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
 
     public MethodDescriptor[] getMethodDescriptors() {
         try {
-            Class c = Display.class;
+            Class c = SaveImage.class;
             Class parameterTypes[] = { FilterEvent.class };
             String name = "filterValueChanged";
             Method method1 = c.getMethod(name, parameterTypes);
@@ -32,4 +39,5 @@ public class DisplayBeanInfo extends SimpleBeanInfo {
         }
         return null;
     }
+
 }

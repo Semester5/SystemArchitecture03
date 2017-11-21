@@ -6,21 +6,12 @@ import java.util.Vector;
 
 public class Display extends Canvas implements Serializable, IFilterListener {
 
-    private Vector listeners;
     private PlanarImage image;
 
     public Display() {
-        this.setSize(100, 100);
-        this.listeners = new Vector();
+        this.setSize(200, 200);
+        this.setBackground(Color.DARK_GRAY);
         image = null;
-    }
-
-    public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
     }
 
     @Override

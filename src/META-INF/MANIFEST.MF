@@ -18,3 +18,5 @@ Java-Bean: True
 Name: bean/Opening.class
 Java-Bean: True
 
+Name: bean/SaveImage.class
+Java-Bean: True
