@@ -5,5 +5,5 @@ import bean.CoordinateEvent;
 import java.util.EventListener;
 
 public interface ICoordinateListener extends EventListener {
-     void filterValueChanged(CoordinateEvent filterEvent);
+     void filterValueChanged(CoordinateEvent coordinateEvent);
 }

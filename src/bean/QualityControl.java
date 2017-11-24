@@ -12,6 +12,7 @@ public class QualityControl implements ICoordinateListener, Serializable {
     private int yTolerance;
     private String outputFilePath;
 
+    private ArrayList<Coordinate> coordinates;
     private ArrayList<Coordinate> expectedCoordinates = new ArrayList<Coordinate>();
 
     public QualityControl() {
@@ -27,10 +28,40 @@ public class QualityControl implements ICoordinateListener, Serializable {
         expectedCoordinates.add(new Coordinate(396,81));
     }
 
-    @Override
-    public void filterValueChanged(CoordinateEvent filterEvent) {
-        ArrayList<Coordinate> coordinates = filterEvent.getCoordinates();
+    public int getXTolerance() {
+        return xTolerance;
+    }
 
+    public void setXTolerance(int xTolerance) {
+        this.xTolerance = xTolerance;
+        updateOutputfile();
+    }
+
+    public int getYTolerance() {
+        return yTolerance;
+    }
+
+    public void setYTolerance(int yTolerance) {
+        this.yTolerance = yTolerance;
+        updateOutputfile();
+    }
+
+    public String getOutputFilePath() {
+        return outputFilePath;
+    }
+
+    public void setOutputFilePath(String outputFilePath) {
+        this.outputFilePath = outputFilePath;
+        updateOutputfile();
+    }
+
+    @Override
+    public void filterValueChanged(CoordinateEvent coordinateEvent) {
+        coordinates = coordinateEvent.getValue();
+        updateOutputfile();
+    }
+
+    private void updateOutputfile() {
         if(coordinates == null) {
             return;
         }

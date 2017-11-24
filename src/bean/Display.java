@@ -9,7 +9,7 @@ public class Display extends Canvas implements Serializable, IFilterListener {
     private PlanarImage planarImage;
 
     public Display() {
-        this.setSize(500, 70);
+        this.setSize(600, 100);
         this.setBackground(Color.DARK_GRAY);
         planarImage = null;
     }

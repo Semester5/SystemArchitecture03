@@ -2,14 +2,13 @@ package bean;
 
 import javax.media.jai.PlanarImage;
 import javax.media.jai.operator.MedianFilterDescriptor;
+import javax.media.jai.operator.ThresholdDescriptor;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Median  implements IFilterListener, Serializable {
+public class Median extends BaseFilter {
 
     private int maskSize;
-    private Vector listener;
-
 
     public Median() {
         maskSize = 6 ;
@@ -22,6 +21,7 @@ public class Median  implements IFilterListener, Serializable {
 
     public void setMaskSize(int maskSize) {
         this.maskSize = maskSize;
+        updatePlanarImage();
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
@@ -33,19 +33,8 @@ public class Median  implements IFilterListener, Serializable {
     }
 
     @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage planarImage = filterEvent.getValue();
-        planarImage = MedianFilterDescriptor.create(planarImage, MedianFilterDescriptor.MEDIAN_MASK_SQUARE, maskSize, null);
-        fireFilterEvent(planarImage);
-    }
-
-    protected  void fireFilterEvent(PlanarImage planarImage) {
-        Vector clonedVector =  (Vector) listener.clone();
-        FilterEvent filterEvent = new FilterEvent(this, planarImage);
-
-        for(int i = 0; i < clonedVector.size(); i++) {
-            IFilterListener filterListener = (IFilterListener)clonedVector.elementAt(i);
-            filterListener.filterValueChanged(filterEvent);
-        }
+    protected void updatePlanarImage() {
+        PlanarImage newPlanarImage = MedianFilterDescriptor.create(planarImage, MedianFilterDescriptor.MEDIAN_MASK_SQUARE, maskSize, null);
+        fireFilterEvent(newPlanarImage);
     }
 }

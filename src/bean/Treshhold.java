@@ -5,12 +5,11 @@ import javax.media.jai.operator.ThresholdDescriptor;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Treshhold  implements IFilterListener, Serializable {
+public class Treshhold extends BaseFilter {
 
     private double low;
     private double high;
     private double constant;
-    private Vector listener;
 
     public Treshhold() {
         low = 0;
@@ -25,6 +24,7 @@ public class Treshhold  implements IFilterListener, Serializable {
 
     public void setLow(double low) {
         this.low = low;
+        updatePlanarImage();
     }
 
     public double getHigh() {
@@ -33,6 +33,7 @@ public class Treshhold  implements IFilterListener, Serializable {
 
     public void setHigh(double high) {
         this.high = high;
+        updatePlanarImage();
     }
 
     public double getConstant() {
@@ -41,6 +42,7 @@ public class Treshhold  implements IFilterListener, Serializable {
 
     public void setConstant(double constant) {
         this.constant = constant;
+        updatePlanarImage();
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
@@ -52,22 +54,12 @@ public class Treshhold  implements IFilterListener, Serializable {
     }
 
     @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage image = filterEvent.getValue();
+    protected void updatePlanarImage() {
         double[] lows = {low};
         double[] highs = {high};
         double[] constants = {constant};
 
-        image = ThresholdDescriptor.create(image, lows, highs, constants, null);
-        fireFilterEvent(image);
-    }
-
-    protected  void fireFilterEvent(PlanarImage image) {
-        Vector clonedVector =  (Vector) listener.clone();
-        FilterEvent filterEvent = new FilterEvent(this, image);
-        for(int i = 0; i < clonedVector.size(); i++) {
-            IFilterListener filterListener = (IFilterListener)clonedVector.elementAt(i);
-            filterListener.filterValueChanged(filterEvent);
-        }
+        PlanarImage newPlanarImage = ThresholdDescriptor.create(planarImage, lows, highs, constants, null);
+        fireFilterEvent(newPlanarImage);
     }
 }

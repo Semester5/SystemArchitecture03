@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.*;
 
-public class CalcCentroids  implements IFilterListener, Serializable {
+public class CalcCentroids extends BaseFilter {
 
     private HashMap<Coordinate, Boolean> _general = new HashMap<Coordinate, Boolean>();
     private LinkedList<ArrayList<Coordinate>> _figures = new LinkedList<ArrayList<Coordinate>>();
@@ -24,9 +24,9 @@ public class CalcCentroids  implements IFilterListener, Serializable {
     }
 
     @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage planarImage = filterEvent.getValue();
-        BufferedImage bufferedImage = planarImage.getAsBufferedImage();
+    protected void updatePlanarImage() {
+        PlanarImage newPlanarImage = planarImage;
+        BufferedImage bufferedImage = newPlanarImage.getAsBufferedImage();
 
         for (int x = 0; x < bufferedImage.getWidth(); x++) {
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
@@ -36,19 +36,8 @@ public class CalcCentroids  implements IFilterListener, Serializable {
                 }
             }
         }
-
-        ArrayList<Coordinate> coordinates = calculateCentroids(planarImage);
+        ArrayList<Coordinate> coordinates = calculateCentroids(newPlanarImage);
         fireFilterEvent(coordinates);
-    }
-
-    protected  void fireFilterEvent(ArrayList<Coordinate> coordinates) {
-        Vector clonedVector =  (Vector) listener.clone();
-        CoordinateEvent coordinateEvent = new CoordinateEvent(this, coordinates);
-
-        for(int i = 0; i < clonedVector.size(); i++) {
-            ICoordinateListener coordinateListener = (ICoordinateListener) clonedVector.elementAt(i);
-            coordinateListener.filterValueChanged(coordinateEvent);
-        }
     }
 
     private void getNextFigure(BufferedImage img, int x, int y) {

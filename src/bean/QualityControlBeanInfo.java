@@ -10,11 +10,12 @@ public class QualityControlBeanInfo extends SimpleBeanInfo {
 
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor xTolerance, yTolerance;
+            PropertyDescriptor xTolerance, yTolerance, outputFilePath;
             Class cls = QualityControl.class;
             xTolerance = new PropertyDescriptor("xTolerance", cls);
             yTolerance = new PropertyDescriptor("yTolerance", cls);
-            PropertyDescriptor pd[] = { xTolerance, yTolerance };
+            outputFilePath = new PropertyDescriptor("outputFilePath", cls);
+            PropertyDescriptor pd[] = { xTolerance, yTolerance, outputFilePath };
             return pd;
         }
         catch(Exception ex) {

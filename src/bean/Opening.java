@@ -7,12 +7,11 @@ import javax.media.jai.operator.ErodeDescriptor;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Opening implements IFilterListener, Serializable {
+public class Opening extends BaseFilter {
 
     private int matrixSize;
     private int erodeLoops;
     private int dilateLoops;
-    private Vector listener;
 
     public Opening() {
         matrixSize = 5;
@@ -27,6 +26,7 @@ public class Opening implements IFilterListener, Serializable {
 
     public void setMatrixSize(int matrixSize) {
         this.matrixSize = matrixSize;
+        updatePlanarImage();
     }
 
     public int getErodeLoops() {
@@ -35,6 +35,7 @@ public class Opening implements IFilterListener, Serializable {
 
     public void setErodeLoops(int erodeLoops) {
         this.erodeLoops = erodeLoops;
+        updatePlanarImage();
     }
 
     public int getDilateLoops() {
@@ -43,6 +44,7 @@ public class Opening implements IFilterListener, Serializable {
 
     public void setDilateLoops(int dilateLoops) {
         this.dilateLoops = dilateLoops;
+        updatePlanarImage();
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
@@ -54,31 +56,22 @@ public class Opening implements IFilterListener, Serializable {
     }
 
     @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
+    protected void updatePlanarImage() {
         float[] kernelMatrix = new float[matrixSize * matrixSize];
         for(int i = 0; i < matrixSize * matrixSize; i++) {
             kernelMatrix[i] = 1;
         }
 
-        PlanarImage image = filterEvent.getValue();
+        PlanarImage newPlanarImage = planarImage;
         KernelJAI kernel = new KernelJAI(matrixSize, matrixSize, kernelMatrix);
 
         for(int i = 0; i < erodeLoops; i++) {
-            image = ErodeDescriptor.create(image, kernel, null);
+            newPlanarImage = ErodeDescriptor.create(newPlanarImage, kernel, null);
         }
 
         for(int i = 0; i < dilateLoops; i++) {
-            image = DilateDescriptor.create(image, kernel, null);
+            newPlanarImage = DilateDescriptor.create(newPlanarImage, kernel, null);
         }
-        fireFilterEvent(image);
-    }
-
-    protected  void fireFilterEvent(PlanarImage image) {
-        Vector clonedVector =  (Vector) listener.clone();
-        FilterEvent filterEvent = new FilterEvent(this, image);
-        for(int i = 0; i < clonedVector.size(); i++) {
-            IFilterListener filterListener = (IFilterListener)clonedVector.elementAt(i);
-            filterListener.filterValueChanged(filterEvent);
-        }
+        fireFilterEvent(newPlanarImage);
     }
 }

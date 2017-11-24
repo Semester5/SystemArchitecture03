@@ -6,14 +6,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
 
-public class SaveImage implements IFilterListener, Serializable {
+public class SaveImage extends BaseFilter {
 
     private String pathName;
     private String formatName;
-    //no listener necessary!
 
     public SaveImage() {
-        pathName = "C:\\Systemarchitekturen\\Outputfiles\\SavedPlanarImage";
+        pathName = "C:\\Systemarchitekturen\\Outputfiles\\SavedPlanarImage.png";
         formatName = "png";
     }
 
@@ -23,6 +22,7 @@ public class SaveImage implements IFilterListener, Serializable {
 
     public void setPathName(String pathName) {
         this.pathName = pathName;
+        updatePlanarImage();
     }
 
     public String getFormatName() {
@@ -31,11 +31,11 @@ public class SaveImage implements IFilterListener, Serializable {
 
     public void setFormatName(String formatName) {
         this.formatName = formatName;
+        updatePlanarImage();
     }
 
     @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage planarImage = filterEvent.getValue();
+    protected void updatePlanarImage() {
         try {
             if(!pathName.isEmpty() && !formatName.isEmpty()) {
                 // retrieve image
@@ -44,7 +44,7 @@ public class SaveImage implements IFilterListener, Serializable {
                 ImageIO.write(bufferedImage, formatName, outputfile);
             }
         } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

@@ -1,9 +1,6 @@
 package bean;
 
-import java.beans.MethodDescriptor;
-import java.beans.ParameterDescriptor;
-import java.beans.PropertyDescriptor;
-import java.beans.SimpleBeanInfo;
+import java.beans.*;
 import java.lang.reflect.Method;
 
 public class CalcCentroidsBeanInfo extends SimpleBeanInfo {
@@ -12,6 +9,25 @@ public class CalcCentroidsBeanInfo extends SimpleBeanInfo {
         try {
             PropertyDescriptor pd[] = { };
             return pd;
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public EventSetDescriptor[] getEventSetDescriptors() {
+        try {
+            EventSetDescriptor esd1;
+            Class c = CalcCentroids.class;
+            String es = "CalcCentroids";
+            Class lc = IFilterListener.class;
+            String names[] = { "filterValueChanged" };
+            String al = "addIFilterListener";
+            String rl  = "removeIFilterListener";
+            esd1 = new EventSetDescriptor(c, es, lc, names, al, rl);
+            EventSetDescriptor esd[] = { esd1 };
+            return esd;
         }
         catch(Exception ex) {
             ex.printStackTrace();

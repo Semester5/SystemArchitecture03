@@ -34,6 +34,7 @@ public class SourceReader implements Runnable, Serializable{
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+        run();
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
@@ -44,26 +45,14 @@ public class SourceReader implements Runnable, Serializable{
         listener.remove(filterListener);
     }
 
+
     @Override
     public void run() {
-        String input = "";
-        try {
-            while(true) {
-                if(input != imagePath) {
-                    input = imagePath;
+        String input = imagePath;
 
-                    if(input.isEmpty()) {
-                        Thread.sleep(1000);
-                        continue;
-                    }
-                    this.planarImage =  JAI.create("fileload", input);
-
-                    fireFilterEvent();
-                }
-                Thread.sleep(1000);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(!input.isEmpty()) {
+            this.planarImage =  JAI.create("fileload", input);
+            fireFilterEvent();
         }
     }
 
