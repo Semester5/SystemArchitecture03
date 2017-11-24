@@ -21,7 +21,7 @@ public class CalcCentroidsBeanInfo extends SimpleBeanInfo {
             EventSetDescriptor esd1;
             Class c = CalcCentroids.class;
             String es = "CalcCentroids";
-            Class lc = IFilterListener.class;
+            Class lc = ICoordinateListener.class; //target class!
             String names[] = { "filterValueChanged" };
             String al = "addIFilterListener";
             String rl  = "removeIFilterListener";
