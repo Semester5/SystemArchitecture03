@@ -20,6 +20,8 @@ public class QualityControl implements ICoordinateListener, Serializable {
         yTolerance = 3;
         outputFilePath = "C:\\Systemarchitekturen\\Outputfiles\\tolerances.txt";
 
+        coordinates = new ArrayList<>();
+
         expectedCoordinates.add(new Coordinate(73,77));
         expectedCoordinates.add(new Coordinate(110,80));
         expectedCoordinates.add(new Coordinate(202,80));

@@ -36,8 +36,17 @@ public class CalcCentroids extends BaseFilter {
                 }
             }
         }
-        ArrayList<Coordinate> coordinates = calculateCentroids(newPlanarImage);
-        fireFilterEvent(coordinates);
+        fireFilterEvent(calculateCentroids(newPlanarImage));
+    }
+
+    private void fireFilterEvent(ArrayList<Coordinate> coordinates) {
+        Vector clonedVector =  (Vector) listener.clone();
+        CoordinateEvent coordinateEvent = new CoordinateEvent(this, coordinates);
+
+        for(int i = 0; i < clonedVector.size(); i++) {
+            ICoordinateListener coordinateListener = (ICoordinateListener) clonedVector.elementAt(i);
+            coordinateListener.filterValueChanged(coordinateEvent);
+        }
     }
 
     private void getNextFigure(BufferedImage img, int x, int y) {

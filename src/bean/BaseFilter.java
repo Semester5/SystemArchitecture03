@@ -26,14 +26,4 @@ public abstract class BaseFilter implements IFilterListener, Serializable {
             filterListener.filterValueChanged(filterEvent);
         }
     }
-
-    protected void fireFilterEvent(ArrayList<Coordinate> coordinates) {
-        Vector clonedVector =  (Vector) listener.clone();
-        CoordinateEvent coordinateEvent = new CoordinateEvent(this, coordinates);
-
-        for(int i = 0; i < clonedVector.size(); i++) {
-            ICoordinateListener coordinateListener = (ICoordinateListener) clonedVector.elementAt(i);
-            coordinateListener.filterValueChanged(coordinateEvent);
-        }
-    }
 }

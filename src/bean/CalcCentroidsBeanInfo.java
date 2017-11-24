@@ -37,7 +37,7 @@ public class CalcCentroidsBeanInfo extends SimpleBeanInfo {
 
     public MethodDescriptor[] getMethodDescriptors() {
         try {
-            Class c = Display.class;
+            Class c = CalcCentroids.class;
             Class parameterTypes[] = { FilterEvent.class };
             String name = "filterValueChanged";
             Method method1 = c.getMethod(name, parameterTypes);
