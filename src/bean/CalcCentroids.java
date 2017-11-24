@@ -7,49 +7,50 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.*;
 
-public class CalcCentroids  implements Serializable, IFilterListener   {
+public class CalcCentroids  implements IFilterListener, Serializable {
 
     private HashMap<Coordinate, Boolean> _general = new HashMap<Coordinate, Boolean>();
     private LinkedList<ArrayList<Coordinate>> _figures = new LinkedList<ArrayList<Coordinate>>();
-    private Vector listeners;
+    private Vector listener;
 
     public CalcCentroids() {
-        listeners = new Vector();
+        listener = new Vector();
+    }
+
+    public void addIFilterListener(IFilterListener filterListener) {
+        listener.addElement(filterListener);
+    }
+
+    public void removeIFilterListener(IFilterListener filterListener) {
+        listener.remove(filterListener);
     }
 
     @Override
     public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage image = filterEvent.getValue();
-        BufferedImage bi = image.getAsBufferedImage();
+        PlanarImage planarImage = filterEvent.getValue();
+        BufferedImage bufferedImage = planarImage.getAsBufferedImage();
 
-        for (int x = 0; x < bi.getWidth(); x++) {
-            for (int y = 0; y < bi.getHeight(); y++) {
-                int p = bi.getRaster().getSample(x, y, 0);
+        for (int x = 0; x < bufferedImage.getWidth(); x++) {
+            for (int y = 0; y < bufferedImage.getHeight(); y++) {
+                int p = bufferedImage.getRaster().getSample(x, y, 0);
                 if (p == 255 && _general.containsKey(new Coordinate(x, y)) == false) {
-                    getNextFigure(bi, x, y);        //if there is a not visited white pixel, save all pixels belonging to the same figure
+                    getNextFigure(bufferedImage, x, y);        //if there is a not visited white pixel, save all pixels belonging to the same figure
                 }
             }
         }
 
-        ArrayList<Coordinate> coordinates = calculateCentroids(image);
+        ArrayList<Coordinate> coordinates = calculateCentroids(planarImage);
         fireFilterEvent(coordinates);
-
     }
+
     protected  void fireFilterEvent(ArrayList<Coordinate> coordinates) {
-        Vector v =  (Vector)listeners.clone();
-        CoordinateEvent fe = new CoordinateEvent(this, coordinates);
-        for(int i = 0; i < v.size(); i++) {
-            ICoordinateListener fl = (ICoordinateListener)v.elementAt(i);
-            fl.filterValueChanged(fe);
+        Vector clonedVector =  (Vector) listener.clone();
+        CoordinateEvent coordinateEvent = new CoordinateEvent(this, coordinates);
+
+        for(int i = 0; i < clonedVector.size(); i++) {
+            ICoordinateListener coordinateListener = (ICoordinateListener) clonedVector.elementAt(i);
+            coordinateListener.filterValueChanged(coordinateEvent);
         }
-    }
-
-    public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
     }
 
     private void getNextFigure(BufferedImage img, int x, int y) {
@@ -108,5 +109,4 @@ public class CalcCentroids  implements Serializable, IFilterListener   {
         }
         return centroids;
     }
-
 }

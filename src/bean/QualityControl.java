@@ -8,12 +8,12 @@ import java.io.FileWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class QualityControl implements Serializable, ICoordinateListener   {
-
+public class QualityControl implements ICoordinateListener, Serializable {
 
     @Override
     public void filterValueChanged(CoordinateEvent filterEvent) {
-        ArrayList<Coordinate> coordinates = filterEvent.getValue();
+        ArrayList<Coordinate> coordinates = filterEvent.getCoordinates();
+
         if(coordinates == null) {
             return;
         }
@@ -37,7 +37,8 @@ public class QualityControl implements Serializable, ICoordinateListener   {
             boolean yValid = false;
             for(int i = 0; i < coordinates.size(); i++) {
 
-                if(Math.abs(expectedCoordinates.get(i)._x - coordinates.get(i)._x) > xTolerance) {
+                if(Math.abs(
+                        .get(i)._x - coordinates.get(i)._x) > xTolerance) {
                     xValid = false;
                 }else {
                     xValid = true;

@@ -5,7 +5,7 @@ import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
-public class SourceBeanInfo extends SimpleBeanInfo{
+public class SourceReaderBeanInfo extends SimpleBeanInfo {
 
     @Override
     public PropertyDescriptor[] getPropertyDescriptors() {

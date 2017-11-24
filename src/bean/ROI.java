@@ -6,20 +6,20 @@ import java.awt.image.RenderedImage;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class ROI implements Serializable, IFilterListener {
+public class ROI implements IFilterListener, Serializable {
 
     private int x;
     private int y;
     private int width;
     private int height;
-    private Vector listeners;
+    private Vector listener;
 
     public ROI () {
-        listeners = new Vector();
         x = 0;
         y = 0;
         width = 200;
         height = 50;
+        listener = new Vector();
     }
 
     public int getX() {
@@ -54,35 +54,31 @@ public class ROI implements Serializable, IFilterListener {
         this.height = height;
     }
 
-    @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage image = filterEvent.getValue();
-        Rectangle rectangle = new Rectangle(x, y, width, height);
-        image = PlanarImage.wrapRenderedImage((RenderedImage) image.getAsBufferedImage(rectangle, image.getColorModel()));
-        image.setProperty("offsetX", x);
-        image.setProperty("offsetY", y);
-        fireFilterEvent(image);
-    }
-
-    protected  void fireFilterEvent(PlanarImage image) {
-        Vector v =  (Vector)listeners.clone();
-        FilterEvent fe = new FilterEvent(this, image);
-        for(int i = 0; i < v.size(); i++) {
-            IFilterListener fl = (IFilterListener)v.elementAt(i);
-            fl.filterValueChanged(fe);
-        }
-    }
-
     public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
+        listener.addElement(filterListener);
     }
 
     public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
+        listener.remove(filterListener);
     }
 
+    @Override
+    public void filterValueChanged(FilterEvent filterEvent) {
+        PlanarImage planarImage = filterEvent.getValue();
+        Rectangle rectangle = new Rectangle(x, y, width, height);
+        planarImage = PlanarImage.wrapRenderedImage((RenderedImage) planarImage.getAsBufferedImage(rectangle, planarImage.getColorModel()));
+        planarImage.setProperty("offsetX", x);
+        planarImage.setProperty("offsetY", y);
+        fireFilterEvent(planarImage);
+    }
 
+    protected  void fireFilterEvent(PlanarImage planarImage) {
+        Vector vector =  (Vector) listener.clone();
+        FilterEvent filterEvent = new FilterEvent(this, planarImage);
 
-
-
+        for(int i = 0; i < vector.size(); i++) {
+            IFilterListener filterListener = (IFilterListener)vector.elementAt(i);
+            filterListener.filterValueChanged(filterEvent);
+        }
+    }
 }

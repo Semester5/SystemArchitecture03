@@ -23,6 +23,8 @@ public class SaveImageBeanInfo extends SimpleBeanInfo {
         return null;
     }
 
+    //getEventSetDescriptors is not necessary!
+
     public MethodDescriptor[] getMethodDescriptors() {
         try {
             Class c = SaveImage.class;
@@ -39,5 +41,4 @@ public class SaveImageBeanInfo extends SimpleBeanInfo {
         }
         return null;
     }
-
 }

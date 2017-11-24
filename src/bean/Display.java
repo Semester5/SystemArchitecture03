@@ -1,8 +1,8 @@
 package bean;
+
 import javax.media.jai.PlanarImage;
 import java.awt.*;
 import java.io.Serializable;
-import java.util.Vector;
 
 public class Display extends Canvas implements Serializable, IFilterListener {
 

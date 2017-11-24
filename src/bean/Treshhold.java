@@ -5,18 +5,18 @@ import javax.media.jai.operator.ThresholdDescriptor;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Treshhold  implements Serializable, IFilterListener {
+public class Treshhold  implements IFilterListener, Serializable {
 
     private double low;
     private double high;
     private double constant;
-    private Vector listeners;
+    private Vector listener;
 
     public Treshhold() {
         low = 0;
         high = 30;
         constant = 255;
-        listeners = new Vector();
+        listener = new Vector();
     }
 
     public double getLow() {
@@ -43,30 +43,31 @@ public class Treshhold  implements Serializable, IFilterListener {
         this.constant = constant;
     }
 
+    public void addIFilterListener(IFilterListener filterListener) {
+        listener.addElement(filterListener);
+    }
+
+    public void removeIFilterListener(IFilterListener filterListener) {
+        listener.remove(filterListener);
+    }
+
     @Override
     public void filterValueChanged(FilterEvent filterEvent) {
         PlanarImage image = filterEvent.getValue();
         double[] lows = {low};
         double[] highs = {high};
         double[] constants = {constant};
+
         image = ThresholdDescriptor.create(image, lows, highs, constants, null);
         fireFilterEvent(image);
     }
 
     protected  void fireFilterEvent(PlanarImage image) {
-        Vector v =  (Vector)listeners.clone();
-        FilterEvent fe = new FilterEvent(this, image);
-        for(int i = 0; i < v.size(); i++) {
-            IFilterListener fl = (IFilterListener)v.elementAt(i);
-            fl.filterValueChanged(fe);
+        Vector clonedVector =  (Vector) listener.clone();
+        FilterEvent filterEvent = new FilterEvent(this, image);
+        for(int i = 0; i < clonedVector.size(); i++) {
+            IFilterListener filterListener = (IFilterListener)clonedVector.elementAt(i);
+            filterListener.filterValueChanged(filterEvent);
         }
-    }
-
-    public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
     }
 }

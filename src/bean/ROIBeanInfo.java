@@ -3,7 +3,7 @@ package bean;
 import java.beans.*;
 import java.lang.reflect.Method;
 
-public class RIOBeanInfo extends SimpleBeanInfo {
+public class ROIBeanInfo extends SimpleBeanInfo {
 
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
@@ -57,5 +57,4 @@ public class RIOBeanInfo extends SimpleBeanInfo {
         }
         return null;
     }
-
 }

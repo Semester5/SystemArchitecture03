@@ -54,5 +54,4 @@ public class MedianBeanInfo extends SimpleBeanInfo {
         }
         return null;
     }
-
 }

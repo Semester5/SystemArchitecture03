@@ -8,23 +8,24 @@ import java.util.Vector;
 /**
  * Created by Christina on 30.10.2017.
  */
-public class SourceReader implements  Runnable, Serializable{
+public class SourceReader implements Runnable, Serializable{
 
-    private Vector listeners;
     private String imagePath;
-    private PlanarImage image;
-    private transient Thread t;
+    private PlanarImage planarImage;
+    private transient Thread thread;
+    private Vector listener;
 
     public SourceReader() {
-        this.imagePath = "";
-        this.listeners = new Vector();
-        image = null;
+        this.imagePath = "C:\\Users\\julia\\Documents\\Fachhochschule Vorarlberg\\Semester5\\Systemarchitekturen\\Übung\\Übung03\\loetstellen.jpg";
+        planarImage = null;
+        this.listener = new Vector();
+
         startThread();
     }
 
     private void startThread() {
-        t = new Thread(this);
-        t.start();
+        thread = new Thread(this);
+        thread.start();
     }
 
     public String getImagePath() {
@@ -36,11 +37,11 @@ public class SourceReader implements  Runnable, Serializable{
     }
 
     public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
+        listener.addElement(filterListener);
     }
 
     public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
+        listener.remove(filterListener);
     }
 
     @Override
@@ -49,12 +50,11 @@ public class SourceReader implements  Runnable, Serializable{
             while(true) {
                 String input = imagePath;
 
-                if(input.equals("")) {
+                if(input.isEmpty()) {
                     Thread.sleep(1000);
                     continue;
                 }
-
-                this.image =  JAI.create("fileload", input);
+                this.planarImage =  JAI.create("fileload", input);
 
                 fireFilterEvent();
                 Thread.sleep(1000);
@@ -65,14 +65,15 @@ public class SourceReader implements  Runnable, Serializable{
     }
 
     protected synchronized void fireFilterEvent() {
-        Vector v;
+        Vector clonedListener;
         synchronized (this) {
-            v = (Vector)listeners.clone();
+            clonedListener = (Vector) listener.clone();
         }
-        FilterEvent fe = new FilterEvent(this, image);
-        for(int i = 0; i < v.size(); i++) {
-            IFilterListener fl = (IFilterListener)v.elementAt(i);
-            fl.filterValueChanged(fe);
+        FilterEvent filterEvent = new FilterEvent(this, planarImage);
+
+        for(int i = 0; i < clonedListener.size(); i++) {
+            IFilterListener filterListener = (IFilterListener) clonedListener.elementAt(i);
+            filterListener.filterValueChanged(filterEvent);
         }
     }
 }

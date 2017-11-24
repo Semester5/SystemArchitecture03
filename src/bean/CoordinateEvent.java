@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.EventObject;
 
 public class CoordinateEvent extends EventObject {
-    private ArrayList<Coordinate> value;
+
+    private ArrayList<Coordinate> coordinates;
+
     /**
      * Constructs a prototypical Event.
      *
@@ -15,14 +17,14 @@ public class CoordinateEvent extends EventObject {
      */
     public CoordinateEvent(Object source , ArrayList<Coordinate> coordinates) {
         super(source);
-        this.value = coordinates;
+        this.coordinates = coordinates;
     }
 
-    public ArrayList<Coordinate> getValue() {
-        return value;
+    public ArrayList<Coordinate> getCoordinates() {
+        return coordinates;
     }
 
-    public void setValue(ArrayList<Coordinate> value) {
-        this.value = value;
+    public void setCoordinates(ArrayList<Coordinate> coordinates) {
+        this.coordinates = coordinates;
     }
 }

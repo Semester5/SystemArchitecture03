@@ -5,15 +5,15 @@ import javax.media.jai.operator.MedianFilterDescriptor;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Median  implements Serializable, IFilterListener {
+public class Median  implements IFilterListener, Serializable {
 
     private int maskSize;
-    private Vector listeners;
+    private Vector listener;
 
 
     public Median() {
         maskSize = 6 ;
-        listeners = new Vector();
+        listener = new Vector();
     }
 
     public int getMaskSize() {
@@ -24,28 +24,28 @@ public class Median  implements Serializable, IFilterListener {
         this.maskSize = maskSize;
     }
 
-    @Override
-    public void filterValueChanged(FilterEvent filterEvent) {
-        PlanarImage image = filterEvent.getValue();
-        image = MedianFilterDescriptor.create(image, MedianFilterDescriptor.MEDIAN_MASK_SQUARE, maskSize, null);
-        fireFilterEvent(image);
-    }
-
-    protected  void fireFilterEvent(PlanarImage image) {
-        Vector v =  (Vector)listeners.clone();
-        FilterEvent fe = new FilterEvent(this, image);
-        for(int i = 0; i < v.size(); i++) {
-            IFilterListener fl = (IFilterListener)v.elementAt(i);
-            fl.filterValueChanged(fe);
-        }
-    }
-
-
     public void addIFilterListener(IFilterListener filterListener) {
-        listeners.addElement(filterListener);
+        listener.addElement(filterListener);
     }
 
     public void removeIFilterListener(IFilterListener filterListener) {
-        listeners.remove(filterListener);
+        listener.remove(filterListener);
+    }
+
+    @Override
+    public void filterValueChanged(FilterEvent filterEvent) {
+        PlanarImage planarImage = filterEvent.getValue();
+        planarImage = MedianFilterDescriptor.create(planarImage, MedianFilterDescriptor.MEDIAN_MASK_SQUARE, maskSize, null);
+        fireFilterEvent(planarImage);
+    }
+
+    protected  void fireFilterEvent(PlanarImage planarImage) {
+        Vector clonedVector =  (Vector) listener.clone();
+        FilterEvent filterEvent = new FilterEvent(this, planarImage);
+
+        for(int i = 0; i < clonedVector.size(); i++) {
+            IFilterListener filterListener = (IFilterListener)clonedVector.elementAt(i);
+            filterListener.filterValueChanged(filterEvent);
+        }
     }
 }
