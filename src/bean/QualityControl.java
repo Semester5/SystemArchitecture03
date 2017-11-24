@@ -10,6 +10,26 @@ import java.util.ArrayList;
 
 public class QualityControl implements Serializable, ICoordinateListener   {
 
+    private int xTolerance;
+    private int yTolerance;
+    private String filePath;
+
+    private ArrayList<Coordinate> expectedCoordinates = new ArrayList<Coordinate>();
+
+    public QualityControl() {
+        expectedCoordinates.add(new Coordinate(73,77));
+        expectedCoordinates.add(new Coordinate(110,80));
+        expectedCoordinates.add(new Coordinate(202,80));
+        expectedCoordinates.add(new Coordinate(265,79));
+        expectedCoordinates.add(new Coordinate(330,81));
+        expectedCoordinates.add(new Coordinate(396,81));
+
+        xTolerance = 3;
+        yTolerance = 3;
+        filePath = "C:\tolerances.txt";
+
+    }
+
 
     @Override
     public void filterValueChanged(CoordinateEvent filterEvent) {
@@ -18,7 +38,7 @@ public class QualityControl implements Serializable, ICoordinateListener   {
             return;
         }
 
-        File outputFile = new File("Outputfiles", "tolerances.txt");
+        File outputFile = new File(filePath);
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
             bw.write("Auswertung Bildverarbeitung" + System.lineSeparator() + System.lineSeparator());
