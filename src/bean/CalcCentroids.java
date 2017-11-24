@@ -1,7 +1,5 @@
 package bean;
 
-import CalcCentroidsFilterPkg.Coordinate;
-
 import javax.media.jai.PlanarImage;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;

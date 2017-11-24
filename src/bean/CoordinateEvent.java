@@ -1,7 +1,5 @@
 package bean;
 
-import CalcCentroidsFilterPkg.Coordinate;
-
 import java.util.ArrayList;
 import java.util.EventObject;
 

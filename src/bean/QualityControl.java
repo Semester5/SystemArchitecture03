@@ -1,7 +1,5 @@
 package bean;
 
-import CalcCentroidsFilterPkg.Coordinate;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,22 +10,21 @@ public class QualityControl implements ICoordinateListener, Serializable {
 
     private int xTolerance;
     private int yTolerance;
-    private String filePath;
+    private String outputFilePath;
 
     private ArrayList<Coordinate> expectedCoordinates = new ArrayList<Coordinate>();
 
     public QualityControl() {
+        xTolerance = 3;
+        yTolerance = 3;
+        outputFilePath = "C:\\Systemarchitekturen\\Outputfiles\\tolerances.txt";
+
         expectedCoordinates.add(new Coordinate(73,77));
         expectedCoordinates.add(new Coordinate(110,80));
         expectedCoordinates.add(new Coordinate(202,80));
         expectedCoordinates.add(new Coordinate(265,79));
         expectedCoordinates.add(new Coordinate(330,81));
         expectedCoordinates.add(new Coordinate(396,81));
-
-        xTolerance = 3;
-        yTolerance = 3;
-        filePath = "C:\tolerances.txt";
-
     }
 
     @Override
@@ -38,7 +35,7 @@ public class QualityControl implements ICoordinateListener, Serializable {
             return;
         }
 
-        File outputFile = new File(filePath);
+        File outputFile = new File(outputFilePath);
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
             bw.write("Auswertung Bildverarbeitung" + System.lineSeparator() + System.lineSeparator());
@@ -57,8 +54,7 @@ public class QualityControl implements ICoordinateListener, Serializable {
             boolean yValid = false;
             for(int i = 0; i < coordinates.size(); i++) {
 
-                if(Math.abs(
-                        .get(i)._x - coordinates.get(i)._x) > xTolerance) {
+                if(Math.abs(expectedCoordinates.get(i)._x - coordinates.get(i)._x) > xTolerance) {
                     xValid = false;
                 }else {
                     xValid = true;

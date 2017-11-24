@@ -1,5 +1,5 @@
 
-package CalcCentroidsFilterPkg;
+package bean;
 
 public class Coordinate {
 

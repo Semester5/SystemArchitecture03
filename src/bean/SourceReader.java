@@ -16,7 +16,7 @@ public class SourceReader implements Runnable, Serializable{
     private Vector listener;
 
     public SourceReader() {
-        this.imagePath = "C:\\Users\\julia\\Documents\\Fachhochschule Vorarlberg\\Semester5\\Systemarchitekturen\\Übung\\Übung03\\loetstellen.jpg";
+        this.imagePath = "C:\\Systemarchitekturen\\Inputfiles\\loetstellen.jpg";
         planarImage = null;
         this.listener = new Vector();
 
@@ -46,17 +46,20 @@ public class SourceReader implements Runnable, Serializable{
 
     @Override
     public void run() {
+        String input = "";
         try {
             while(true) {
-                String input = imagePath;
+                if(input != imagePath) {
+                    input = imagePath;
 
-                if(input.isEmpty()) {
-                    Thread.sleep(1000);
-                    continue;
+                    if(input.isEmpty()) {
+                        Thread.sleep(1000);
+                        continue;
+                    }
+                    this.planarImage =  JAI.create("fileload", input);
+
+                    fireFilterEvent();
                 }
-                this.planarImage =  JAI.create("fileload", input);
-
-                fireFilterEvent();
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e) {
