@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class Median  implements Serializable, IFilterListener {
+
     private int maskSize;
     private Vector listeners;
 

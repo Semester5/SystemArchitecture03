@@ -32,6 +32,7 @@ public class CalcCentroids  implements Serializable, IFilterListener   {
         }
 
         ArrayList<Coordinate> coordinates = calculateCentroids(image);
+        fireFilterEvent(coordinates);
 
     }
     protected  void fireFilterEvent(ArrayList<Coordinate> coordinates) {
