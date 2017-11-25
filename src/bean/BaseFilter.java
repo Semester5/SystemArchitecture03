@@ -26,4 +26,12 @@ public abstract class BaseFilter implements IFilterListener, Serializable {
             filterListener.filterValueChanged(filterEvent);
         }
     }
+
+    public void addIFilterListener(IFilterListener filterListener) {
+        listener.addElement(filterListener);
+    }
+
+    public void removeIFilterListener(IFilterListener filterListener) {
+        listener.remove(filterListener);
+    }
 }

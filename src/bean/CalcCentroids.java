@@ -15,18 +15,18 @@ public class CalcCentroids extends BaseFilter {
         listener = new Vector();
     }
 
-    public void addIFilterListener(IFilterListener filterListener) {
-        listener.addElement(filterListener);
+
+    public void addICoordinateListener(ICoordinateListener coordinateListener) {
+        listener.addElement(coordinateListener);
     }
 
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listener.remove(filterListener);
+    public void removeICoordinateListener(ICoordinateListener coordinateListener) {
+        listener.remove(coordinateListener);
     }
 
     @Override
     protected void updatePlanarImage() {
-        PlanarImage newPlanarImage = planarImage;
-        BufferedImage bufferedImage = newPlanarImage.getAsBufferedImage();
+        BufferedImage bufferedImage = planarImage.getAsBufferedImage();
 
         for (int x = 0; x < bufferedImage.getWidth(); x++) {
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
@@ -36,7 +36,7 @@ public class CalcCentroids extends BaseFilter {
                 }
             }
         }
-        fireFilterEvent(calculateCentroids(newPlanarImage));
+        fireFilterEvent(calculateCentroids());
     }
 
     private void fireFilterEvent(ArrayList<Coordinate> coordinates) {
@@ -82,7 +82,7 @@ public class CalcCentroids extends BaseFilter {
         }
     }
 
-    private ArrayList<Coordinate> calculateCentroids(PlanarImage image) {
+    private ArrayList<Coordinate> calculateCentroids() {
         ArrayList<Coordinate> centroids = new ArrayList<Coordinate>();
         int i = 0;
         for (ArrayList<Coordinate> figure : _figures) {
@@ -100,7 +100,7 @@ public class CalcCentroids extends BaseFilter {
             int xMedian = xValues.get(xValues.size() / 2);
             int yMedian = yValues.get(yValues.size() / 2);
 
-            centroids.add(new Coordinate(xMedian + (Integer) image.getProperty("offsetX"), yMedian + (Integer) image.getProperty("offsetY")));
+            centroids.add(new Coordinate(xMedian + (Integer) planarImage.getProperty("offsetX"), yMedian + (Integer) planarImage.getProperty("offsetY")));
             i++;
         }
         return centroids;

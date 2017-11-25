@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class QualityControl implements ICoordinateListener, Serializable {
 
@@ -12,16 +13,17 @@ public class QualityControl implements ICoordinateListener, Serializable {
     private int yTolerance;
     private String outputFilePath;
 
-    private ArrayList<Coordinate> coordinates;
+    private ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
     private ArrayList<Coordinate> expectedCoordinates = new ArrayList<Coordinate>();
+
+    protected Vector listener;
 
     public QualityControl() {
         xTolerance = 3;
         yTolerance = 3;
         outputFilePath = "C:\\Systemarchitekturen\\Outputfiles\\tolerances.txt";
 
-        coordinates = new ArrayList<>();
-
+        expectedCoordinates.add(new Coordinate(9,78));
         expectedCoordinates.add(new Coordinate(73,77));
         expectedCoordinates.add(new Coordinate(110,80));
         expectedCoordinates.add(new Coordinate(202,80));
@@ -55,6 +57,14 @@ public class QualityControl implements ICoordinateListener, Serializable {
     public void setOutputFilePath(String outputFilePath) {
         this.outputFilePath = outputFilePath;
         updateOutputfile();
+    }
+
+    public void addICoordinateListener(ICoordinateListener coordinateListener) {
+        listener.addElement(coordinateListener);
+    }
+
+    public void removeICoordinateListener(ICoordinateListener coordinateListener) {
+        listener.remove(coordinateListener);
     }
 
     @Override

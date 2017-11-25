@@ -23,8 +23,8 @@ public class CalcCentroidsBeanInfo extends SimpleBeanInfo {
             String es = "CalcCentroids";
             Class lc = ICoordinateListener.class; //target class!
             String names[] = { "filterValueChanged" };
-            String al = "addIFilterListener";
-            String rl  = "removeIFilterListener";
+            String al = "addICoordinateListener";
+            String rl  = "removeICoordinateListener";
             esd1 = new EventSetDescriptor(c, es, lc, names, al, rl);
             EventSetDescriptor esd[] = { esd1 };
             return esd;

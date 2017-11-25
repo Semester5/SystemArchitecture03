@@ -13,6 +13,7 @@ public class SourceReader implements Runnable, Serializable{
     private String imagePath;
     private PlanarImage planarImage;
     private transient Thread thread;
+
     private Vector listener;
 
     public SourceReader() {

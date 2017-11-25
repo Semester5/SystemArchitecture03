@@ -45,14 +45,6 @@ public class Treshhold extends BaseFilter {
         updatePlanarImage();
     }
 
-    public void addIFilterListener(IFilterListener filterListener) {
-        listener.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listener.remove(filterListener);
-    }
-
     @Override
     protected void updatePlanarImage() {
         double[] lows = {low};

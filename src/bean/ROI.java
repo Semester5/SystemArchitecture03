@@ -57,14 +57,6 @@ public class ROI extends BaseFilter {
         updatePlanarImage();
     }
 
-    public void addIFilterListener(IFilterListener filterListener) {
-        listener.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listener.remove(filterListener);
-    }
-
     @Override
     public void filterValueChanged(FilterEvent filterEvent) {
         this.planarImage = filterEvent.getValue();

@@ -24,14 +24,6 @@ public class Median extends BaseFilter {
         updatePlanarImage();
     }
 
-    public void addIFilterListener(IFilterListener filterListener) {
-        listener.addElement(filterListener);
-    }
-
-    public void removeIFilterListener(IFilterListener filterListener) {
-        listener.remove(filterListener);
-    }
-
     @Override
     protected void updatePlanarImage() {
         PlanarImage newPlanarImage = MedianFilterDescriptor.create(planarImage, MedianFilterDescriptor.MEDIAN_MASK_SQUARE, maskSize, null);
